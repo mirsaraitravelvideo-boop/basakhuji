@@ -39,7 +39,7 @@ function escapeHtml(s: string): string {
 
 /* CARTO basemap — tile.openstreetmap.org সরাসরি ব্যবহার নীতিমালা-বিরুদ্ধ */
 const CARTO_TILES =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}";
 
 const DHAKA: [number, number] = [23.8103, 90.4125];
 const DEFAULT_ZOOM = 13; // রাস্তার নাম দেখা যায়
@@ -93,12 +93,13 @@ export default function HomeMap({
       const L = await import("leaflet");
       if (cancelled || !ref.current) return;
       setLmod(L);
-      const map = L.map(ref.current, { scrollWheelZoom: false }).setView(
-        DHAKA,
-        DEFAULT_ZOOM
-      );
+      const map = L.map(ref.current, {
+        scrollWheelZoom: false,
+        zoomControl: false, // সার্চ বক্সের সাথে overlap এড়াতে নিচে-ডানে
+      }).setView(DHAKA, DEFAULT_ZOOM);
+      L.control.zoom({ position: "bottomright" }).addTo(map);
       L.tileLayer(CARTO_TILES, {
-        attribution: "© OpenStreetMap contributors © CARTO",
+        attribution: "© Esri, © OpenStreetMap contributors",
         maxZoom: 19,
       }).addTo(map);
       layerRef.current = L.layerGroup().addTo(map);

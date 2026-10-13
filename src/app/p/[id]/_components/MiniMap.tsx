@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import styles from "../detail.module.css";
 
 const CARTO_TILES =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}";
 
 /** বিজ্ঞাপনের অবস্থানের ছোট ম্যাপ (lat/lng থাকলেই রেন্ডার হয়) */
 export default function MiniMap({
@@ -32,7 +32,7 @@ export default function MiniMap({
         15
       );
       L.tileLayer(CARTO_TILES, {
-        attribution: "© OpenStreetMap contributors © CARTO",
+        attribution: "© Esri, © OpenStreetMap contributors",
         maxZoom: 19,
       }).addTo(map);
       L.marker([lat, lng]).addTo(map).bindPopup(title).openPopup();

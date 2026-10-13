@@ -109,6 +109,39 @@ img {
   }
 }
 
+/* লোডিং স্কেলিটন — পেজ বদলের সময় তাত্ক্ষণিক ফিডব্যাক */
+.loading-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 16px 56px;
+  display: grid;
+  gap: 14px;
+}
+.skeleton {
+  border-radius: 14px;
+  background: linear-gradient(100deg, #efe9dc 40%, #f7f3ea 50%, #efe9dc 60%);
+  background-size: 200% 100%;
+  animation: skeletonShine 1.2s ease-in-out infinite;
+  min-height: 88px;
+}
+.skeleton-hero {
+  min-height: 220px;
+  border-radius: 18px;
+}
+@keyframes skeletonShine {
+  from {
+    background-position: 180% 0;
+  }
+  to {
+    background-position: -20% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
 /* হেডার — স্লিম পিল বার */
 .site-header {
   background: var(--cream);

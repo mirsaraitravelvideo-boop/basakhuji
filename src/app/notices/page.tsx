@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SiteHeader, EmptyState } from "@/components/ui";
 import { bnDate } from "@/lib/format";
@@ -81,24 +82,32 @@ export default async function NoticesPage() {
                 cls: styles.tbInfo,
               };
               return (
-                <article key={n.id} className={styles.card}>
-                  <div className={styles.badges}>
-                    <span className={`${styles.typeBadge} ${meta.cls}`}>
-                      {meta.label}
-                    </span>
-                    <span className={styles.aud}>
-                      {AUDIENCE_LABELS[n.target_audience] ?? n.target_audience}
-                    </span>
-                  </div>
-                  <h2>{n.title}</h2>
-                  <p className={styles.body}>{n.body}</p>
-                  <p className={styles.meta}>
-                    প্রকাশ: {bnDate(n.published_at)}
-                    {n.expires_at
-                      ? ` · মেয়াদ: ${bnDate(n.expires_at)} পর্যন্ত`
-                      : ""}
-                  </p>
-                </article>
+                <Link
+                  key={n.id}
+                  href={`/notices/${n.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  aria-label={n.title}
+                >
+                  <article className={styles.card}>
+                    <div className={styles.badges}>
+                      <span className={`${styles.typeBadge} ${meta.cls}`}>
+                        {meta.label}
+                      </span>
+                      <span className={styles.aud}>
+                        {AUDIENCE_LABELS[n.target_audience] ??
+                          n.target_audience}
+                      </span>
+                    </div>
+                    <h2>{n.title}</h2>
+                    <p className={styles.body}>{n.body}</p>
+                    <p className={styles.meta}>
+                      প্রকাশ: {bnDate(n.published_at)}
+                      {n.expires_at
+                        ? ` · মেয়াদ: ${bnDate(n.expires_at)} পর্যন্ত`
+                        : ""}
+                    </p>
+                  </article>
+                </Link>
               );
             })}
           </div>
