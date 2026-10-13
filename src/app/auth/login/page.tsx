@@ -42,7 +42,11 @@ function LoginForm() {
           setSubmitError("ইমেইল বা পাসওয়ার্ড ভুল");
         }
       } else {
-        router.push(next);
+        // স্টাফ (অ্যাডমিন/মডারেটর) সরাসরি কন্ট্রোল রুমে, বাকিরা গন্তব্যে
+        const { data: role } = await supabase.rpc("my_role");
+        const staff =
+          role === "admin" || role === "moderator" || role === "super_admin";
+        router.push(staff ? "/admin" : next);
         router.refresh();
       }
     } finally {

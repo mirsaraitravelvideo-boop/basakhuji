@@ -28,11 +28,11 @@ export default async function AdminLayout({
     <div className={styles.wrap}>
       <header className={styles.topbar}>
         <Link href="/admin" className={styles.brand}>
-          বাসাখুঁজি বাংলাদেশ
+          🛡️ কন্ট্রোল রুম
         </Link>
-        <span className={styles.badge}>অ্যাডমিন প্যানেল</span>
+        <span className={styles.badge}>অ্যাডমিন</span>
         <Link href="/" className={styles.backLink}>
-          সাইটে ফিরুন →
+          🌐 সাইট দেখুন →
         </Link>
       </header>
       <nav className={styles.nav} aria-label="অ্যাডমিন মেনু">

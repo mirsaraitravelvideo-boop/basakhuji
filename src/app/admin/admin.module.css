@@ -1,19 +1,25 @@
-/* অ্যাডমিন এলাকা — CSS Module (globals.css-এর ব্র্যান্ড টোকেন ব্যবহার করে) */
+/* ============================================================
+   অ্যাডমিন কন্ট্রোল রুম — ডার্ক থিম
+   ইউজার সাইট (সবুজ/ক্রিম) থেকে সম্পূর্ণ আলাদা চেহারা,
+   যাতে এক দেখাতেই বোঝা যায় এটা প্রশাসনের জায়গা।
+   ============================================================ */
 
 .wrap {
   min-height: 100vh;
-  background: var(--cream);
+  background: #0b1220;
+  color: #e2e8f0;
 }
 
 /* টপবার */
 .topbar {
-  background: var(--primary-dark);
+  background: #020617;
   color: #fff;
   padding: 12px 16px;
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  border-bottom: 2px solid #dc2626;
 }
 .brand {
   color: #fff;
@@ -22,41 +28,48 @@
   font-size: 1.15rem;
 }
 .badge {
-  background: var(--accent);
+  background: #dc2626;
   color: #fff;
   font-size: 0.75rem;
   font-weight: 800;
   padding: 3px 10px;
   border-radius: 999px;
+  letter-spacing: 0.02em;
 }
 .backLink {
   margin-left: auto;
-  color: #fff;
+  color: #93c5fd;
   text-decoration: none;
   font-size: 0.9rem;
+  font-weight: 600;
+}
+.backLink:hover {
+  color: #fff;
 }
 
 /* অ্যাডমিন নেভিগেশন */
 .nav {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   overflow-x: auto;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-  padding: 8px 12px;
+  background: #111c33;
+  border-bottom: 1px solid #1e293b;
+  padding: 10px 12px;
 }
 .nav a {
   white-space: nowrap;
   text-decoration: none;
-  color: var(--ink);
-  font-weight: 600;
+  color: #cbd5e1;
+  font-weight: 700;
   font-size: 0.92rem;
   padding: 8px 14px;
   border-radius: 999px;
+  border: 1px solid transparent;
 }
 .nav a:hover {
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: #1e293b;
+  color: #fff;
+  border-color: #334155;
 }
 
 .main {
@@ -66,22 +79,22 @@
 }
 
 .pageTitle {
-  color: var(--primary);
+  color: #fff;
   margin: 0 0 4px;
   font-size: 1.5rem;
 }
 .pageSub {
-  color: var(--muted);
+  color: #94a3b8;
   margin: 0 0 18px;
   font-size: 0.95rem;
 }
 .sectionTitle {
-  color: var(--primary);
+  color: #fbbf24;
   margin: 28px 0 12px;
   font-size: 1.2rem;
 }
 .count {
-  color: var(--muted);
+  color: #94a3b8;
   font-size: 0.9rem;
   font-weight: 400;
 }
@@ -110,26 +123,25 @@
   }
 }
 .linkCard {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--card-radius);
+  background: #16213a;
+  border: 1px solid #2a3a5c;
+  border-radius: 14px;
   padding: 18px;
   text-decoration: none;
-  color: var(--ink);
-  box-shadow: var(--shadow-soft);
+  color: #e2e8f0;
   display: block;
 }
 .linkCard:hover {
-  border-color: var(--primary);
+  border-color: #dc2626;
 }
 .linkCard strong {
-  color: var(--primary);
+  color: #fff;
   display: block;
   margin-bottom: 4px;
   font-size: 1.02rem;
 }
 .linkCard span {
-  color: var(--muted);
+  color: #94a3b8;
   font-size: 0.9rem;
 }
 
@@ -142,38 +154,38 @@
   margin: 0 0 16px;
 }
 .alertOk {
-  background: #dcfce7;
-  color: #166534;
+  background: #14532d;
+  color: #bbf7d0;
 }
 .alertErr {
-  background: #fee2e2;
-  color: #991b1b;
+  background: #7f1d1d;
+  color: #fecaca;
 }
 
 /* টেবিল (মোবাইলে অনুভূমিক স্ক্রল) */
 .tableWrap {
   overflow-x: auto;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow-soft);
+  background: #16213a;
+  border: 1px solid #2a3a5c;
+  border-radius: 14px;
 }
 .table {
   width: 100%;
   border-collapse: collapse;
   min-width: 720px;
   font-size: 0.92rem;
+  color: #e2e8f0;
 }
 .table th,
 .table td {
   text-align: left;
   padding: 10px 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid #2a3a5c;
   vertical-align: top;
 }
 .table th {
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: #1e293b;
+  color: #fbbf24;
   font-size: 0.82rem;
   white-space: nowrap;
 }
@@ -182,15 +194,16 @@
 }
 .titleCell {
   font-weight: 700;
+  color: #fff;
 }
 .muted {
-  color: var(--muted);
+  color: #94a3b8;
   font-size: 0.85rem;
 }
 .mono {
   font-family: ui-monospace, monospace;
   font-size: 0.78rem;
-  color: var(--muted);
+  color: #94a3b8;
   margin-top: 2px;
 }
 .nowrap {
@@ -217,29 +230,35 @@
   line-height: 1.4;
 }
 .btnApprove {
-  background: var(--primary);
+  background: #16a34a;
   color: #fff;
 }
 .btnApprove:hover {
-  background: var(--primary-dark);
+  background: #15803d;
 }
 .btnReject {
-  background: #b91c1c;
+  background: #dc2626;
   color: #fff;
 }
+.btnReject:hover {
+  background: #b91c1c;
+}
 .btnSuspend {
-  background: #b45309;
+  background: #d97706;
   color: #fff;
+}
+.btnSuspend:hover {
+  background: #b45309;
 }
 .btnGhost {
   background: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
+  color: #93c5fd;
+  border: 1.5px solid #3b82f6;
 }
 .btnDangerGhost {
   background: transparent;
-  color: #b91c1c;
-  border: 1.5px solid #b91c1c;
+  color: #fca5a5;
+  border: 1.5px solid #dc2626;
 }
 
 /* ফিল্টার বার */
@@ -255,31 +274,33 @@
   font-weight: 700;
   padding: 7px 14px;
   border-radius: 999px;
-  border: 1.5px solid var(--line);
-  color: var(--muted);
-  background: #fff;
+  border: 1.5px solid #334155;
+  color: #94a3b8;
+  background: #16213a;
 }
 .filterActive {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: var(--primary-soft);
+  border-color: #dc2626;
+  color: #fff;
+  background: #7f1d1d;
 }
 
 /* অপেক্ষমাণ বিজ্ঞাপন কার্ড */
 .pendingCard {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--card-radius);
+  background: #16213a;
+  border: 1px solid #2a3a5c;
+  border-radius: 14px;
   padding: 16px;
   margin-bottom: 12px;
-  box-shadow: var(--shadow-soft);
+  color: #e2e8f0;
 }
 .pendingCard h3 {
   margin: 0 0 6px;
   font-size: 1.05rem;
+  color: #fff;
 }
 .pendingCard p {
   margin: 0 0 10px;
+  color: #cbd5e1;
 }
 .rejectBox {
   display: grid;
@@ -287,34 +308,34 @@
 }
 .rejectBox textarea {
   width: 100%;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid #334155;
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 0.92rem;
   font-family: inherit;
-  background: var(--cream);
-  color: var(--ink);
+  background: #0b1220;
+  color: #e2e8f0;
   resize: vertical;
 }
 .rejectBox textarea:focus {
-  outline: 2px solid var(--primary);
-  border-color: var(--primary);
+  outline: 2px solid #dc2626;
+  border-color: #dc2626;
 }
 
 /* ফর্ম */
 .form {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--card-radius);
+  background: #16213a;
+  border: 1px solid #2a3a5c;
+  border-radius: 14px;
   padding: 18px;
   display: grid;
   gap: 14px;
   margin: 0 0 24px;
-  box-shadow: var(--shadow-soft);
+  color: #e2e8f0;
 }
 .formTitle {
   margin: 0;
-  color: var(--primary);
+  color: #fbbf24;
   font-size: 1.1rem;
 }
 .formRow {
@@ -338,25 +359,26 @@
   gap: 10px;
   font-weight: 700;
   font-size: 0.95rem;
+  color: #e2e8f0;
 }
 .checkRow input {
   width: 20px;
   height: 20px;
-  accent-color: var(--primary);
+  accent-color: #dc2626;
 }
 .noteInline {
   width: 100%;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid #334155;
   border-radius: 10px;
   padding: 9px 12px;
   font-size: 0.9rem;
   font-family: inherit;
-  background: var(--cream);
-  color: var(--ink);
+  background: #0b1220;
+  color: #e2e8f0;
 }
 .noteInline:focus {
-  outline: 2px solid var(--primary);
-  border-color: var(--primary);
+  outline: 2px solid #dc2626;
+  border-color: #dc2626;
 }
 
 /* ছোট ব্যাজ */
@@ -369,20 +391,20 @@
   white-space: nowrap;
 }
 .tagOk {
-  background: #dcfce7;
-  color: #166534;
+  background: #14532d;
+  color: #bbf7d0;
 }
 .tagBad {
-  background: #fee2e2;
-  color: #991b1b;
+  background: #7f1d1d;
+  color: #fecaca;
 }
 .tagMuted {
-  background: #f1f5f4;
-  color: #4b6156;
+  background: #334155;
+  color: #cbd5e1;
 }
 .tagInfo {
-  background: #dbeafe;
-  color: #1e40af;
+  background: #1e3a8a;
+  color: #bfdbfe;
 }
 
 /* ভূমিকা সিলেক্ট */
@@ -392,23 +414,24 @@
   align-items: center;
 }
 .roleForm select {
-  border: 1.5px solid var(--line);
+  border: 1.5px solid #334155;
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 0.85rem;
   font-family: inherit;
-  background: var(--cream);
-  color: var(--ink);
+  background: #0b1220;
+  color: #e2e8f0;
 }
 
 /* বিবরণ বাক্স */
 .detailsBox {
-  background: var(--cream);
-  border: 1px solid var(--line);
+  background: #0b1220;
+  border: 1px solid #2a3a5c;
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 0.85rem;
   max-width: 320px;
+  color: #cbd5e1;
 }
 .clamp {
   display: -webkit-box;

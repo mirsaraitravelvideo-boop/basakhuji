@@ -33,7 +33,6 @@ export function SiteHeader({ name, role, isStaff }: SiteHeaderProps) {
               <Link href="/landlord/new">বাসা দিন</Link>
               <Link href="/messages">বার্তা</Link>
               <Link href="/dashboard">ড্যাশবোর্ড</Link>
-              {isStaff ? <Link href="/admin">অ্যাডমিন</Link> : null}
               <span className={styles.headerUser} title={role ?? ""}>
                 {name}
               </span>

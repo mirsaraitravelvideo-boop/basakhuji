@@ -9,7 +9,7 @@
  * ফোল্ডারে index.php নামে আপলোড করুন (আগের index.html থাকলে সরিয়ে দিন)।
  */
 
-$WORKER  = 'https://basakhuji-bangladesh.mirsaraitravelvideo.workers.dev';
+$WORKER  = 'https://basakhuji.mirsaraitravelvideo.workers.dev';
 $MY_HOST = 'basakhuji.site.je';
 
 /* ===== ডায়াগনস্টিক: basakhuji.site.je/__diag__ খুললে রিপোর্ট দেখাবে ===== */
@@ -25,8 +25,8 @@ if (($_SERVER['REQUEST_URI'] ?? '') === '/__diag__') {
         CURLOPT_TIMEOUT => 20, CURLOPT_ENCODING => '',
         CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
         CURLOPT_RESOLVE => [
-            "basakhuji-bangladesh.mirsaraitravelvideo.workers.dev:443:104.21.70.118",
-            "basakhuji-bangladesh.mirsaraitravelvideo.workers.dev:443:172.67.223.98",
+            "basakhuji.mirsaraitravelvideo.workers.dev:443:104.21.70.118",
+            "basakhuji.mirsaraitravelvideo.workers.dev:443:172.67.223.98",
         ],
     ]);
     $r = curl_exec($t);
@@ -47,8 +47,8 @@ if (($_SERVER['REQUEST_URI'] ?? '') === '/__diag__') {
                 CURLOPT_TIMEOUT => 20, CURLOPT_ENCODING => '',
                 CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                 CURLOPT_RESOLVE => [
-                    "basakhuji-bangladesh.mirsaraitravelvideo.workers.dev:443:104.21.70.118",
-                    "basakhuji-bangladesh.mirsaraitravelvideo.workers.dev:443:172.67.223.98",
+                    "basakhuji.mirsaraitravelvideo.workers.dev:443:104.21.70.118",
+                    "basakhuji.mirsaraitravelvideo.workers.dev:443:172.67.223.98",
                 ],
             ]);
             $cr = curl_exec($c);
@@ -84,7 +84,7 @@ curl_setopt($ch, CURLOPT_ENCODING, '');    // gzip নিজে সামলা�
 curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 // InfinityFree-এর DNS workers.dev চিনতে পারে না — তাই DNS বাইপাস করে
 // Cloudflare edge IP-তে সরাসরি যাওয়া (SNI/সার্টিফিকেট ঠিক থাকে)
-$host443 = 'basakhuji-bangladesh.mirsaraitravelvideo.workers.dev:443';
+$host443 = 'basakhuji.mirsaraitravelvideo.workers.dev:443';
 curl_setopt($ch, CURLOPT_RESOLVE, [
     "$host443:104.21.70.118",
     "$host443:172.67.223.98",
@@ -140,7 +140,7 @@ foreach (explode("\r\n", $rawHeaders) as $line) {
     if ($lk === 'location') {
         // worker-এর ঠিকানা → নিজের ডোমেইনে বদলে দাও (ডোমেইনেই থাকবে)
         $hv = str_replace($WORKER, 'https://' . $MY_HOST, $hv);
-        $hv = str_replace('basakhuji-bangladesh.mirsaraitravelvideo.workers.dev', $MY_HOST, $hv);
+        $hv = str_replace('basakhuji.mirsaraitravelvideo.workers.dev', $MY_HOST, $hv);
     }
     header("$hk: $hv", false);
 }
