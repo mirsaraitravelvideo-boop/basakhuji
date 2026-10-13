@@ -86,6 +86,9 @@ function LoginForm() {
         <p className={styles.mutedCenter}>
           অ্যাকাউন্ট নেই? <Link href="/auth/signup">সাইন আপ করুন</Link>
         </p>
+        <p className={styles.mutedCenter}>
+          <Link href="/auth/forgot">পাসওয়ার্ড ভুলে গেছেন?</Link>
+        </p>
       </form>
     </main>
   );
