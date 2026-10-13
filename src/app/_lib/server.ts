@@ -2,8 +2,18 @@ import { createServerClient } from "@supabase/ssr";
 import type { CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-function env(name: string): string {
-  const v = process.env[name];
+type EnvName = "NEXT_PUBLIC_SUPABASE_URL" | "NEXT_PUBLIC_SUPABASE_ANON_KEY";
+
+/**
+ * সরাসরি process.env.X আকারে পড়া — Next.js বিল্ডের সময় মান বসিয়ে দেয়।
+ * process.env[name] (ডাইনামিক) ব্যবহার করা যাবে না: Cloudflare Workers-এ
+ * রানটাইমে সেটি খালি থাকে, ফলে 500 এরর হয়।
+ */
+function env(name: EnvName): string {
+  const v =
+    name === "NEXT_PUBLIC_SUPABASE_URL"
+      ? process.env.NEXT_PUBLIC_SUPABASE_URL
+      : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!v) throw new Error(`পরিবেশ চলক ${name} সেট করা নেই`);
   return v;
 }
