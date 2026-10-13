@@ -5,6 +5,7 @@ import { PROPERTY_TYPE_LABELS, FURNISHED_LABELS } from "@/lib/labels";
 import { SiteHeader, EmptyState } from "@/components/ui";
 import SearchFilters from "./_components/SearchFilters";
 import SearchView, { type SearchResult } from "./_components/SearchView";
+import { type HomeMapDemand } from "@/app/_components/HomeMap";
 
 export const metadata = {
   title: "বাসা খুঁজুন — বাসাখুঁজি বাংলাদেশ",
@@ -22,6 +23,7 @@ type SearchParams = {
   available_from?: string;
   sort?: string;
   page?: string;
+  view?: string;
 };
 
 type DbRow = {
@@ -173,6 +175,14 @@ export default async function SearchPage({
   const isStaff =
     role === "moderator" || role === "admin" || role === "super_admin";
 
+  /* চাহিদা লেয়ার — function না থাকলে/এরর হলে খালি (সৎ empty state) */
+  const demand: HomeMapDemand[] = await supabase
+    .rpc("demand_by_area")
+    .then(
+      (r) => (r.error || !r.data ? [] : r.data),
+      () => []
+    );
+
   return (
     <>
       <SiteHeader
@@ -202,6 +212,8 @@ export default async function SearchPage({
             page={page}
             totalPages={totalPages}
             queryString={queryString}
+            demand={demand}
+            initialView={sp.view === "map" ? "map" : "list"}
           />
         )}
       </main>

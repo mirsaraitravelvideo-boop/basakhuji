@@ -5,7 +5,7 @@ import { listingImageUrl } from "@/lib/images";
 import { SiteHeader, EmptyState } from "@/components/ui";
 import ListingCard, { type ListingCardData } from "@/components/ListingCard";
 import HeroSearch from "./_components/HeroSearch";
-import HomeMap, { type HomeMapPoint } from "./_components/HomeMap";
+import GoogleMapEmbed from "./_components/GoogleMapEmbed";
 import homeStyles from "./home.module.css";
 
 const FALLBACK_NOTICE = "স্বাগতম! বাসাখুঁজি বাংলাদেশ — নিরাপদ বাসা ভাড়ার ঠিকানা।";
@@ -28,8 +28,6 @@ type HomeRow = {
   bathrooms: number | null;
   property_type: string;
   is_verified: boolean;
-  latitude: number | null;
-  longitude: number | null;
   property_images: { storage_path: string }[] | null;
 };
 
@@ -85,7 +83,7 @@ export default async function Home() {
       supabase
         .from("properties")
         .select(
-          "id,title,district,area,monthly_rent,bedrooms,bathrooms,property_type,is_verified,latitude,longitude,property_images(storage_path)"
+          "id,title,district,area,monthly_rent,bedrooms,bathrooms,property_type,is_verified,property_images(storage_path)"
         )
         .eq("status", "approved")
         .or(vis)
@@ -117,16 +115,6 @@ export default async function Home() {
     is_verified: p.is_verified,
     imageUrl: p.imageUrl,
   }));
-
-  const mapPoints: HomeMapPoint[] = rows
-    .filter((p) => p.latitude != null && p.longitude != null)
-    .map((p) => ({
-      id: p.id,
-      title: p.title,
-      lat: p.latitude as number,
-      lng: p.longitude as number,
-      rent: p.monthly_rent,
-    }));
 
   const [featured, ...rest] = listings;
 
@@ -176,6 +164,18 @@ export default async function Home() {
           </nav>
         </div>
 
+        <section className="section" style={{ paddingTop: 12 }}>
+          <div className="container">
+            <div className={homeStyles.sectionHead}>
+              <h2>ম্যাপে দেখুন</h2>
+              <Link href="/search" className={homeStyles.seeAll}>
+                সব দেখুন →
+              </Link>
+            </div>
+            <GoogleMapEmbed />
+          </div>
+        </section>
+
         <section className="section">
           <div className="container">
             <div className={homeStyles.sectionHead}>
@@ -211,18 +211,6 @@ export default async function Home() {
             )}
           </div>
         </section>
-
-        {mapPoints.length > 0 && (
-          <section className="section" style={{ paddingTop: 0 }}>
-            <div className="container">
-              <h2>ম্যাপে দেখুন</h2>
-              <p className={homeStyles.mapHint}>
-                পিনে চাপ দিলে বিজ্ঞাপনটি খুলবে।
-              </p>
-              <HomeMap points={mapPoints} />
-            </div>
-          </section>
-        )}
 
         <section className="section">
           <div className="container">

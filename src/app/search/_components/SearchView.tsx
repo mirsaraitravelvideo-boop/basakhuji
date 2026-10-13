@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import ListingCard, { type ListingCardData } from "@/components/ListingCard";
-import { shortRent } from "@/lib/labels";
-import "leaflet/dist/leaflet.css";
+import HomeMap, {
+  type HomeMapPoint,
+  type HomeMapDemand,
+} from "@/app/_components/HomeMap";
 import styles from "./SearchView.module.css";
 
 export interface SearchResult extends ListingCardData {
@@ -19,18 +21,11 @@ interface SearchViewProps {
   totalPages: number;
   /** page ছাড়া বাকি সব query param */
   queryString: string;
+  /** চাহিদা লেয়ারের সমষ্টিগত ডেটা */
+  demand: HomeMapDemand[];
+  /** ?view=map দিলে সরাসরি ম্যাপ ভিউ */
+  initialView: "list" | "map";
 }
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-const CARTO_TILES =
-  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
 
 /** তালিকা/ম্যাপ টগল + পেজিনেশন */
 export default function SearchView({
@@ -39,64 +34,24 @@ export default function SearchView({
   page,
   totalPages,
   queryString,
+  demand,
+  initialView,
 }: SearchViewProps) {
-  const [view, setView] = useState<"list" | "map">("list");
-  const mapRef = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState<"list" | "map">(initialView);
 
   const base = queryString ? `/search?${queryString}` : "/search";
   const pageHref = (p: number) => `${base}${queryString ? "&" : "?"}page=${p}`;
 
-  useEffect(() => {
-    if (view !== "map" || !mapRef.current) return;
-    let map: import("leaflet").Map | null = null;
-    let cancelled = false;
-
-    (async () => {
-      const L = await import("leaflet");
-      if (cancelled || !mapRef.current) return;
-      map = L.map(mapRef.current).setView([23.685, 90.3563], 7);
-      L.tileLayer(CARTO_TILES, {
-        attribution: "© OpenStreetMap contributors © CARTO",
-        maxZoom: 19,
-      }).addTo(map);
-
-      const pts: [number, number][] = [];
-      results.forEach((r) => {
-        if (r.latitude == null || r.longitude == null || !map) return;
-        pts.push([r.latitude, r.longitude]);
-        const icon = L.divIcon({
-          className: styles.rentMarker,
-          html: `<span>${shortRent(r.monthly_rent)}</span>`,
-        });
-        L.marker([r.latitude, r.longitude], { icon })
-          .addTo(map)
-          .bindPopup(
-            `<a href="/p/${
-              r.id
-            }" style="font-weight:700;color:#0b6b3a;text-decoration:none">${escapeHtml(
-              r.title
-            )}</a><br>৳${r.monthly_rent.toLocaleString(
-              "bn-BD"
-            )}/মাস · ${escapeHtml(r.area)}, ${escapeHtml(r.district)}`
-          );
-      });
-      if (pts.length > 0 && map) {
-        map.fitBounds(L.latLngBounds(pts).pad(0.2));
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-      if (map) {
-        map.remove();
-        map = null;
-      }
-    };
-  }, [view, results]);
-
-  const withLocation = results.filter(
-    (r) => r.latitude != null && r.longitude != null
-  );
+  /* কোঅর্ডিনেটহীন বিজ্ঞাপন পিন পায় না (সততা নিয়ম) */
+  const points: HomeMapPoint[] = results
+    .filter((r) => r.latitude != null && r.longitude != null)
+    .map((r) => ({
+      id: r.id,
+      title: r.title,
+      lat: r.latitude as number,
+      lng: r.longitude as number,
+      rent: r.monthly_rent,
+    }));
 
   return (
     <div>
@@ -133,15 +88,7 @@ export default function SearchView({
           ))}
         </div>
       ) : (
-        <div>
-          {withLocation.length === 0 ? (
-            <p className={styles.mapHint}>
-              এই ফলাফলগুলোর কোনোটিতে ম্যাপের অবস্থান দেওয়া নেই।
-            </p>
-          ) : (
-            <div ref={mapRef} className={styles.map} aria-label="বিজ্ঞাপনের ম্যাপ" />
-          )}
-        </div>
+        <HomeMap points={points} demand={demand} />
       )}
 
       {totalPages > 1 && (

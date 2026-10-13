@@ -463,6 +463,15 @@ export type Database = {
       set_user_suspended: { Args: { p_user: string; p_suspended: boolean }; Returns: void };
       resolve_report: { Args: { p_id: string; p_action: string; p_note?: string | null }; Returns: void };
       admin_recent_audit: { Args: { p_limit?: number }; Returns: AdminAuditRow[] };
+      demand_by_area: {
+        Args: Record<string, never>;
+        Returns: {
+          district: string;
+          area: string | null;
+          seekers: number;
+          top_from: string | null;
+        }[];
+      };
     };
     Enums: {
       user_role: UserRole;

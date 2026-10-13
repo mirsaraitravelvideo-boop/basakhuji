@@ -36,6 +36,7 @@ const PROPERTY_TYPE_BN: Record<string, string> = {
 type AlertFilters = {
   district?: string;
   area?: string;
+  from_area?: string;
   min_rent?: number;
   max_rent?: number;
   property_type?: string;
@@ -45,6 +46,7 @@ function alertLabel(f: AlertFilters): string {
   const parts: string[] = [];
   if (f.district) parts.push(f.district);
   if (f.area) parts.push(f.area);
+  if (f.from_area) parts.push(`${f.from_area} থেকে`);
   if (f.min_rent != null || f.max_rent != null) {
     const fmt = (n: number) => "৳" + n.toLocaleString("bn-BD");
     parts.push(
@@ -294,6 +296,14 @@ export default async function DashboardPage() {
                   name="area"
                   className={formCss.input}
                   placeholder="যেমন: মিরসরাই"
+                  maxLength={80}
+                />
+              </Field>
+              <Field label="বর্তমান এলাকা (ঐচ্ছিক)">
+                <input
+                  name="from_area"
+                  className={formCss.input}
+                  placeholder="যেমন: মিরসরাই — এখন যেখানে থাকেন"
                   maxLength={80}
                 />
               </Field>

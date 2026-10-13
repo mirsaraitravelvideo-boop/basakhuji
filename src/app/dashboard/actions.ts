@@ -41,6 +41,8 @@ export async function createAlert(formData: FormData) {
   const property_type = String(formData.get("property_type") ?? "").trim();
   const filters: Record<string, unknown> = { district };
   if (area) filters.area = area;
+  const from_area = String(formData.get("from_area") ?? "").trim();
+  if (from_area) filters.from_area = from_area;
   const min_rent = intOrNull(formData.get("min_rent"));
   const max_rent = intOrNull(formData.get("max_rent"));
   if (min_rent !== null) filters.min_rent = min_rent;

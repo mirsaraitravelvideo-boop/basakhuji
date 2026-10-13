@@ -1,7 +1,43 @@
-/* হোমপেজ ম্যাপ — দামের পিন */
+/* হোমপেজ ম্যাপ — লেয়ার ট্যাব + দামের/চাহিদার পিন */
+
+.wrap {
+  margin-top: 4px;
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 8px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 10px;
+}
+
+.tab,
+.tabActive {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+}
+
+.tabActive {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: var(--shadow-soft);
+}
+
+.mapWrap {
+  position: relative;
+}
 
 .map {
-  height: 260px;
+  height: 320px;
   border-radius: var(--card-radius);
   overflow: hidden;
   border: 1px solid var(--line);
@@ -11,6 +47,46 @@
   background: var(--primary-soft);
 }
 
+.empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 24px;
+  background: rgba(250, 245, 236, 0.92);
+  border-radius: var(--card-radius);
+  z-index: 500;
+}
+
+.empty p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 30ch;
+}
+
+.cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.hint {
+  margin: 8px 2px 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* বাসার পিন (দামের ব্যাজ) */
 .pin {
   background: transparent;
   border: none;
@@ -28,4 +104,32 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
   transform: translate(-50%, -50%);
+}
+
+/* চাহিদার পিন (🔥 N জন) */
+.demandPin {
+  background: transparent;
+  border: none;
+}
+
+.demandPin span {
+  display: inline-block;
+  background: #fff7ed;
+  color: #9a3412;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 2px solid #f97316;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .tabActive,
+  .cta {
+    transition: none;
+  }
 }
