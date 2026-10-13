@@ -1,0 +1,342 @@
+/* বিজ্ঞাপনের বিস্তারিত পেজ — মোবাইল-ফার্স্ট */
+
+.wrap {
+  padding: 20px 0 40px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.layout {
+  display: grid;
+  gap: 20px;
+}
+
+.mainImage {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+}
+
+.mainImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholderMain {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--card-radius);
+  background: linear-gradient(135deg, var(--primary-soft), #f4efe1);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 4rem;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.thumb {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  flex: 0 0 72px;
+  height: 54px;
+  background: var(--primary-soft);
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbOn {
+  border-color: var(--primary);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 16px 0 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.verified {
+  flex-shrink: 0;
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 4px;
+}
+
+.location {
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+
+.rent {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin: 8px 0;
+}
+
+.rent small {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.description {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  margin: 16px 0;
+  white-space: pre-line;
+}
+
+.specTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.specTable th,
+.specTable td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.specTable tr:last-child th,
+.specTable tr:last-child td {
+  border-bottom: none;
+}
+
+.specTable th {
+  color: var(--muted);
+  font-weight: 600;
+  width: 40%;
+  background: #fbfaf5;
+}
+
+.specTable td {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.amenityChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+.amenityChip {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  border: 1px solid #cbe6d4;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sectionTitle {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin: 20px 0 8px;
+}
+
+.miniMap {
+  height: 220px;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: #eef3f0;
+  z-index: 0;
+}
+
+.gmapsLink {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+/* সাইডবার */
+.sidebar {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.ownerCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.ownerCard h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--primary-dark);
+}
+
+.ownerName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ownerVerified {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.ownerPhone {
+  display: inline-block;
+  margin: 8px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.ownerPhone:hover {
+  text-decoration: underline;
+}
+
+.safetyTip {
+  margin: 12px 0 0;
+  font-size: 0.88rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* অ্যাকশন */
+.actions {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.actionRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actionRow .btn {
+  flex: 1 1 auto;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.subForm {
+  display: grid;
+  gap: 10px;
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+
+.subForm label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+}
+
+.subForm textarea,
+.subForm select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--cream);
+  color: var(--ink);
+  resize: vertical;
+}
+
+.subForm textarea:focus,
+.subForm select:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+.subForm .btn {
+  padding: 10px 20px;
+  justify-self: start;
+}
+
+.inlineMsg {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--primary-dark);
+  background: var(--primary-soft);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+@media (min-width: 860px) {
+  .layout {
+    grid-template-columns: 1fr 340px;
+    align-items: start;
+  }
+}

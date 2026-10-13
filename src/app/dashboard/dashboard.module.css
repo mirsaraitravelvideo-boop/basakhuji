@@ -1,0 +1,181 @@
+/* ভাড়াটিয়া ড্যাশবোর্ড */
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.savedCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.savedImg {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  background: #f2efe6;
+}
+
+.savedImgEmpty {
+  width: 100%;
+  height: 150px;
+  background: var(--primary-soft);
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+}
+
+.savedBody {
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+  flex: 1;
+}
+
+.savedTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.savedTitle a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.savedMeta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.savedFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.rent {
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* অ্যালার্ট */
+.alertRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.alertRow.off {
+  opacity: 0.65;
+}
+
+.alertDesc {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.alertBtns {
+  display: flex;
+  gap: 8px;
+}
+
+/* রিপোর্ট */
+.reportRow {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #fff;
+  display: grid;
+  gap: 4px;
+}
+
+.reportTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.reportReason {
+  font-weight: 700;
+  margin: 0;
+}
+
+.reportMeta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* বার্তা লিংক */
+.msgLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+.msgCount {
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+/* অ্যাকাউন্ট */
+.accountRow {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.accountRow:last-child {
+  border-bottom: none;
+}
+
+.accountLabel {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 700;
+}

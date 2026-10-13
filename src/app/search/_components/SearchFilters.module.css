@@ -1,0 +1,135 @@
+/* SearchFilters */
+
+.filters {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  margin: 16px 0;
+  box-shadow: var(--shadow-soft);
+}
+
+.summary {
+  cursor: pointer;
+  padding: 14px 18px;
+  font-weight: 800;
+  color: var(--primary);
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.form {
+  padding: 0 18px 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+.grid label,
+.sortLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+}
+
+.grid input,
+.grid select,
+.sortLabel select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.grid input:focus,
+.grid select:focus,
+.sortLabel select:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+.amenities {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 0;
+}
+
+.amenities legend {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 0 6px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  background: var(--cream);
+}
+
+.chip input {
+  accent-color: var(--primary);
+}
+
+.chipOn {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.sortLabel {
+  max-width: 280px;
+}
+
+.error {
+  margin: 0;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions .btn {
+  padding: 10px 24px;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,271 @@
+/* বাসাখুঁজি — শেয়ার্ড ফর্ম ও UI স্টাইল (মোবাইল-ফার্স্ট) */
+
+.userName {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.pageHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 20px 0 16px;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary);
+  line-height: 1.4;
+}
+
+.pageSub {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.pageAction {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ফর্ম */
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.label {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.req {
+  color: #c0392b;
+}
+
+.hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.err {
+  font-size: 0.85rem;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.grid2 {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formError {
+  background: #fdecea;
+  border: 1px solid #f5c6c0;
+  color: #a93226;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.btnRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.btnSmall {
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btnGreen {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btnOrange {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btnOutline {
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btnDanger {
+  background: #fff;
+  color: #a93226;
+  border: 1.5px solid #e3a7a0;
+}
+
+/* খালি অবস্থা */
+.empty {
+  background: #fff;
+  border: 1px dashed var(--line);
+  border-radius: var(--card-radius);
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-weight: 800;
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+}
+
+.emptyText {
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+}
+
+.emptyAction {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* স্ট্যাটাস চিপ */
+.chip {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.chipDraft {
+  background: #eef0ed;
+  color: #5b6a60;
+}
+.chipPending {
+  background: #fef3d8;
+  color: #92600a;
+}
+.chipApproved {
+  background: #e2f4e9;
+  color: #0b6b3a;
+}
+.chipRejected {
+  background: #fdecea;
+  color: #a93226;
+}
+.chipSuspended {
+  background: #4a2c2c;
+  color: #ffd9d4;
+}
+.chipRented {
+  background: #e3ecfd;
+  color: #1d4fa1;
+}
+.chipInactive {
+  background: #eceae4;
+  color: #7a766c;
+}
+
+/* পরিসংখ্যান কার্ড */
+.statCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
+  padding: 16px;
+  display: grid;
+  gap: 4px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.statValue {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+@media (min-width: 640px) {
+  .statGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* সেকশন */
+.sectionCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  color: var(--primary);
+}

@@ -1,0 +1,168 @@
+/* শেয়ার্ড UI কম্পোনেন্টের স্টাইল (globals.css অপরিবর্তিত রাখা হয়েছে) */
+
+.pageHead {
+  text-align: center;
+  margin: 32px 0 20px;
+}
+
+.pageHead h1 {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 1.6rem;
+}
+
+.pageHead p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--ink);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.fieldError {
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.formError {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+}
+
+.infoBox {
+  background: var(--primary-soft);
+  border: 1px solid #bfe3cd;
+  color: var(--primary-dark);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+}
+
+.mutedCenter {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.radioRow {
+  display: flex;
+  gap: 12px;
+}
+
+.radioCard {
+  flex: 1;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.radioCard input {
+  margin-right: 6px;
+}
+
+.radioCard:has(input:checked) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+}
+
+.chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  padding: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.statCard .value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 4px;
+}
+
+.statCard .label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--muted);
+}
+
+.empty h2 {
+  color: var(--ink);
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.empty p {
+  margin: 0 0 20px;
+}
+
+.headerUser {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

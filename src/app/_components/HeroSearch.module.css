@@ -1,0 +1,41 @@
+/* HeroSearch — globals-এর .search-card-এর সাথে মিলিয়ে */
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+.select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.select:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+.error {
+  margin: 0;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .full {
+    grid-column: 1 / -1;
+  }
+}
