@@ -33,6 +33,40 @@ export default function SearchFilters({
     (initial.amenities ?? "").split(",").filter(Boolean)
   );
   const [error, setError] = useState<string | null>(null);
+  /* 📍 কাছাকাছি */
+  const [nearKm, setNearKm] = useState(initial.near_km ?? "");
+  const [nearCoords, setNearCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(() => {
+    const la = parseFloat(initial.near_lat ?? "");
+    const ln = parseFloat(initial.near_lng ?? "");
+    return Number.isFinite(la) && Number.isFinite(ln)
+      ? { lat: la, lng: ln }
+      : null;
+  });
+  const [locating, setLocating] = useState(false);
+
+  function useMyLocationForFilter() {
+    if (!("geolocation" in navigator)) {
+      setError("এই ডিভাইসে অবস্থান সেবা নেই");
+      return;
+    }
+    setLocating(true);
+    setError(null);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setNearCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        if (!nearKm) setNearKm("5");
+        setLocating(false);
+      },
+      () => {
+        setLocating(false);
+        setError("অবস্থান পাওয়া যায়নি — ব্রাউজারে অনুমতি দিন");
+      },
+      { timeout: 12000, maximumAge: 600000 }
+    );
+  }
 
   function toggleAmenity(slug: string) {
     setAmenities((prev) =>
@@ -55,6 +89,10 @@ export default function SearchFilters({
       setError("সর্বনিম্ন ভাড়া সর্বোচ্চ ভাড়ার চেয়ে বেশি হতে পারবে না।");
       return null;
     }
+    if (nearKm && !nearCoords) {
+      setError("📍 কাছাকাছি ব্যবহার করতে আগে 'আমার অবস্থান' বাটনে চাপুন।");
+      return null;
+    }
     setError(null);
     const params = new URLSearchParams();
     if (district.trim()) params.set("district", district.trim());
@@ -67,6 +105,11 @@ export default function SearchFilters({
     if (availableFrom) params.set("available_from", availableFrom);
     if (amenities.length > 0) params.set("amenities", amenities.join(","));
     if (sort && sort !== "newest") params.set("sort", sort);
+    if (nearKm && nearCoords) {
+      params.set("near_lat", String(nearCoords.lat));
+      params.set("near_lng", String(nearCoords.lng));
+      params.set("near_km", nearKm);
+    }
     return params;
   }
 
@@ -204,6 +247,40 @@ export default function SearchFilters({
             <option value="rent_desc">ভাড়া বেশি থেকে কম</option>
           </select>
         </label>
+
+        <fieldset className={styles.amenities}>
+          <legend>📍 কাছাকাছি</legend>
+          <div className={styles.chips}>
+            <button
+              type="button"
+              className={`${styles.chip} ${nearCoords ? styles.chipOn : ""}`}
+              onClick={useMyLocationForFilter}
+              disabled={locating}
+            >
+              {locating
+                ? "অবস্থান নেওয়া হচ্ছে…"
+                : nearCoords
+                  ? "✓ আমার অবস্থান সেট"
+                  : "আমার অবস্থান ব্যবহার করুন"}
+            </button>
+            {(["2", "5", "10"] as const).map((km) => (
+              <button
+                key={km}
+                type="button"
+                className={`${styles.chip} ${nearKm === km ? styles.chipOn : ""}`}
+                onClick={() => setNearKm(nearKm === km ? "" : km)}
+              >
+                {km === "2" ? "২" : km === "5" ? "৫" : "১০"} কিমি
+              </button>
+            ))}
+          </div>
+          {nearKm && nearCoords && (
+            <p className={styles.sortLabel} style={{ marginTop: 8 }}>
+              ✓ {nearKm === "2" ? "২" : nearKm === "5" ? "৫" : "১০"} কিমির মধ্যে —
+              দূরত্ব অনুযায়ী সাজানো হবে
+            </p>
+          )}
+        </fieldset>
 
         {error && (
           <p className={styles.error} role="alert">

@@ -126,6 +126,149 @@
   transform: translate(-50%, -50%);
 }
 
+/* "আপনি এখানে" পিন — নীল ডট */
+.mePin {
+  background: transparent;
+  border: none;
+}
+
+.mePin span {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.25), 0 2px 6px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+}
+
+/* এলাকা সার্চ বক্স (ম্যাপের উপর ভাসমান) */
+.searchBox {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 500;
+}
+
+.searchBox input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+}
+
+.searchBox input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.searchSpin {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  color: var(--muted);
+}
+
+.searchResults {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.searchResults button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.searchResults button:hover,
+.searchResults button:focus-visible {
+  background: var(--primary-soft);
+}
+
+.searchError {
+  margin: 6px 2px 0;
+  font-size: 0.85rem;
+  color: #b91c1c;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* 📍 আমার অবস্থান বাটন */
+.locateBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 28px;
+  z-index: 500;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.locateBtn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* বাসাখুঁজি ম্যাপ ব্র্যান্ড ব্যাজ */
+.brand {
+  position: absolute;
+  left: 10px;
+  bottom: 28px;
+  z-index: 500;
+  background: rgba(11, 107, 58, 0.9);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.locError {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 64px;
+  z-index: 500;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #92400e;
+  background: rgba(255, 251, 235, 0.97);
+  border: 1px solid #fcd34d;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tab,
   .tabActive,

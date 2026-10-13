@@ -78,6 +78,37 @@
   font-size: 0.85rem;
 }
 
+/* বাড়ির পিন (ড্র্যাগ করা যায়) */
+.housePin {
+  background: transparent;
+  border: none;
+}
+
+.housePin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  background: #fff;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+}
+
+/* reverse-geocode প্রস্তাব নোট */
+.geoNote {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
 /* সুবিধা */
 .amenGrid {
   display: grid;

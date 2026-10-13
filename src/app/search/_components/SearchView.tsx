@@ -12,6 +12,8 @@ import styles from "./SearchView.module.css";
 export interface SearchResult extends ListingCardData {
   latitude: number | null;
   longitude: number | null;
+  /** 📍 কাছাকাছি ফিল্টারে — ইউজার থেকে দূরত্ব (কিমি) */
+  distance_km?: number | null;
 }
 
 interface SearchViewProps {
@@ -25,6 +27,8 @@ interface SearchViewProps {
   demand: HomeMapDemand[];
   /** ?view=map দিলে সরাসরি ম্যাপ ভিউ */
   initialView: "list" | "map";
+  /** 📍 কাছাকাছি ফিল্টারের কেন্দ্র — ম্যাপে "আপনি এখানে" পিন */
+  nearLoc?: { lat: number; lng: number } | null;
 }
 
 /** তালিকা/ম্যাপ টগল + পেজিনেশন */
@@ -36,6 +40,7 @@ export default function SearchView({
   queryString,
   demand,
   initialView,
+  nearLoc = null,
 }: SearchViewProps) {
   const [view, setView] = useState<"list" | "map">(initialView);
 
@@ -84,11 +89,14 @@ export default function SearchView({
       {view === "list" ? (
         <div className={styles.grid}>
           {results.map((r) => (
-            <ListingCard key={r.id} listing={r} />
+            <ListingCard
+              key={r.id}
+              listing={{ ...r, distanceKm: r.distance_km ?? null }}
+            />
           ))}
         </div>
       ) : (
-        <HomeMap points={points} demand={demand} />
+        <HomeMap points={points} demand={demand} presetLoc={nearLoc} />
       )}
 
       {totalPages > 1 && (

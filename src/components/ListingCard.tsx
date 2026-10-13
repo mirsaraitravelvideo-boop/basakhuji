@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PROPERTY_TYPE_LABELS } from "@/lib/labels";
+import { formatDistance } from "@/lib/geo";
 import styles from "./ListingCard.module.css";
 
 export interface ListingCardData {
@@ -14,6 +15,8 @@ export interface ListingCardData {
   is_verified: boolean;
   /** ইতিমধ্যে রেজলভ করা পাবলিক ছবি URL; না থাকলে প্লেসহোল্ডার দেখায় */
   imageUrl?: string | null;
+  /** 📍 কাছাকাছি ফিল্টারে — ইউজার থেকে দূরত্ব (কিমি) */
+  distanceKm?: number | null;
   /** বড় ফিচার্ড কার্ড */
   featured?: boolean;
   /** ২-কলাম গ্রিডের ছোট কার্ড */
@@ -59,6 +62,9 @@ export default function ListingCard({
         <h3 className={styles.title}>{listing.title}</h3>
         <p className={styles.location}>
           📍 {listing.area}, {listing.district}
+          {listing.distanceKm != null && (
+            <> · <strong>{formatDistance(listing.distanceKm)} দূরে</strong></>
+          )}
         </p>
         <div className={styles.specs}>
           {listing.bedrooms != null && (

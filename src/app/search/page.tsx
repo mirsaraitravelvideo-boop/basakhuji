@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getMyProfile, getRole } from "@/lib/roles";
 import { listingImageUrl } from "@/lib/images";
+import { haversineKm } from "@/lib/geo";
 import { PROPERTY_TYPE_LABELS, FURNISHED_LABELS } from "@/lib/labels";
 import { SiteHeader, EmptyState } from "@/components/ui";
 import SearchFilters from "./_components/SearchFilters";
@@ -24,6 +25,10 @@ type SearchParams = {
   sort?: string;
   page?: string;
   view?: string;
+  /** 📍 কাছাকাছি ফিল্টার */
+  near_lat?: string;
+  near_lng?: string;
+  near_km?: string;
 };
 
 type DbRow = {
@@ -80,6 +85,20 @@ export default async function SearchPage({
     .map((s) => s.trim())
     .filter(Boolean);
 
+  /* 📍 কাছাকাছি — বৈধ হলেই সক্রিয় (২/৫/১০ কিমি) */
+  const nearLat = sp.near_lat ? parseFloat(sp.near_lat) : NaN;
+  const nearLng = sp.near_lng ? parseFloat(sp.near_lng) : NaN;
+  const nearKm = parsePositiveInt(sp.near_km);
+  const nearby =
+    Number.isFinite(nearLat) &&
+    Math.abs(nearLat) <= 90 &&
+    Number.isFinite(nearLng) &&
+    Math.abs(nearLng) <= 180 &&
+    nearKm != null &&
+    [2, 5, 10].includes(nearKm)
+      ? { lat: nearLat, lng: nearLng, km: nearKm }
+      : null;
+
   // সুবিধা ফিল্টার: আগে মিলে যাওয়া property id বের করি (সঠিক count + পেজিনেশন)
   let amenityIds: string[] | null = null;
   if (amenityList.length > 0) {
@@ -133,12 +152,16 @@ export default async function SearchPage({
         .order("created_at", { ascending: false });
     }
 
-    q = q.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+    /* 📍 কাছাকাছি সক্রিয় থাকলে: বেশি রো এনে JS-এ দূরত্বে ফিল্টার+সাজানো */
+    if (nearby) {
+      q = q.limit(500);
+    } else {
+      q = q.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+    }
 
     const { data, count, error } = await q;
     if (!error) {
-      total = count ?? 0;
-      results = ((data ?? []) as DbRow[]).map((p) => ({
+      const mapped = ((data ?? []) as DbRow[]).map((p) => ({
         id: p.id,
         title: p.title,
         district: p.district,
@@ -153,7 +176,24 @@ export default async function SearchPage({
         imageUrl: p.property_images?.[0]?.storage_path
           ? listingImageUrl(p.property_images[0].storage_path)
           : null,
+        distance_km:
+          nearby && p.latitude != null && p.longitude != null
+            ? haversineKm(nearby.lat, nearby.lng, p.latitude, p.longitude)
+            : null,
       }));
+      if (nearby) {
+        const filtered = mapped
+          .filter((p) => p.distance_km != null && p.distance_km <= nearby.km)
+          .sort((a, b) => (a.distance_km ?? 0) - (b.distance_km ?? 0));
+        total = filtered.length;
+        results = filtered.slice(
+          (page - 1) * PAGE_SIZE,
+          page * PAGE_SIZE
+        );
+      } else {
+        total = count ?? 0;
+        results = mapped;
+      }
     }
   }
 
@@ -203,7 +243,11 @@ export default async function SearchPage({
         {total === 0 ? (
           <EmptyState
             title="কোনো বিজ্ঞাপন পাওয়া যায়নি"
-            hint="ফিল্টার বদলে আবার চেষ্টা করুন, অথবা সব ফিল্টার মুছে দিন।"
+            hint={
+              nearby
+                ? `${nearby.km.toLocaleString("bn-BD")} কিমির মধ্যে কোনো বিজ্ঞাপন নেই — দূরত্ব বাড়িয়ে আবার চেষ্টা করুন।`
+                : "ফিল্টার বদলে আবার চেষ্টা করুন, অথবা সব ফিল্টার মুছে দিন।"
+            }
           />
         ) : (
           <SearchView
@@ -214,6 +258,7 @@ export default async function SearchPage({
             queryString={queryString}
             demand={demand}
             initialView={sp.view === "map" ? "map" : "list"}
+            nearLoc={nearby ? { lat: nearby.lat, lng: nearby.lng } : null}
           />
         )}
       </main>

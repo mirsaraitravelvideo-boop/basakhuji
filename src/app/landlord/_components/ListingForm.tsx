@@ -171,11 +171,44 @@ export default function ListingForm({
     return null;
   }
 
-  /* ---------- মানচিত্র (Leaflet + CARTO, ক্লিকে অবস্থান) ---------- */
+  /* ---------- মানচিত্র (Leaflet + CARTO, ট্যাপ/ড্র্যাগে পিন) ---------- */
   const mapEl = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<import("leaflet").Map | null>(null);
-  const markerRef = useRef<import("leaflet").CircleMarker | null>(null);
+  const markerRef = useRef<import("leaflet").Marker | null>(null);
   const panRef = useRef<((la: number, ln: number) => void) | null>(null);
+  const [geoNote, setGeoNote] = useState<string | null>(null);
+
+  /** পিনের অবস্থান থেকে জেলা/এলাকা শনাক্ত করে প্রস্তাব (খালি ফিল্ডে বসে) */
+  async function reverseSuggest(la: number, ln: number) {
+    try {
+      const res = await fetch(
+        `/api/geocode?lat=${la.toFixed(6)}&lon=${ln.toFixed(6)}`
+      );
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        district?: string | null;
+        area?: string | null;
+      };
+      const applied: string[] = [];
+      if (data.district && !f.district.trim()) {
+        set("district")(data.district);
+        applied.push(data.district);
+      }
+      if (data.area && !f.area.trim()) {
+        set("area")(data.area);
+        applied.push(data.area);
+      }
+      if (applied.length > 0) {
+        setGeoNote(`📍 ${applied.join(", ")} শনাক্ত হয়েছে — প্রয়োজনে বদলে নিন`);
+      } else if (data.district || data.area) {
+        setGeoNote(
+          `📍 এখানে ${[data.area, data.district].filter(Boolean).join(", ")} — ফিল্ডে বসাতে চাইলে নিজে লিখুন`
+        );
+      }
+    } catch {
+      /* নীরবে এড়িয়ে যান — ম্যাপ পিনই মুখ্য */
+    }
+  }
 
   useEffect(() => {
     if (step !== 1) return;
@@ -193,15 +226,29 @@ export default function ListingForm({
         "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
         { attribution: "© OpenStreetMap contributors © CARTO", maxZoom: 19 }
       ).addTo(map);
-      const markAt = (la: number, ln: number) => {
-        if (markerRef.current) markerRef.current.setLatLng([la, ln]);
-        else
-          markerRef.current = L.circleMarker([la, ln], {
-            radius: 10,
-            color: "#0b6b3a",
-            fillColor: "#0b6b3a",
-            fillOpacity: 0.7,
-          }).addTo(map);
+      const markAt = (la: number, ln: number, suggest = false) => {
+        if (markerRef.current) {
+          markerRef.current.setLatLng([la, ln]);
+        } else {
+          const icon = L.divIcon({
+            className: styles.housePin,
+            html: "<span>🏠</span>",
+            iconSize: [38, 38],
+            iconAnchor: [19, 34],
+          });
+          const m = L.marker([la, ln], { draggable: true, icon }).addTo(map);
+          /* ড্র্যাগ শেষে অবস্থান আপডেট + এলাকা শনাক্ত */
+          m.on("dragend", () => {
+            const p = m.getLatLng();
+            const rla = Math.round(p.lat * 1e6) / 1e6;
+            const rln = Math.round(p.lng * 1e6) / 1e6;
+            setLat(rla);
+            setLng(rln);
+            reverseSuggest(rla, rln);
+          });
+          markerRef.current = m;
+        }
+        if (suggest) reverseSuggest(la, ln);
       };
       if (lat != null && lng != null) markAt(lat, lng);
       map.on("click", (ev: import("leaflet").LeafletMouseEvent) => {
@@ -209,7 +256,7 @@ export default function ListingForm({
         const ln = Math.round(ev.latlng.lng * 1e6) / 1e6;
         setLat(la);
         setLng(ln);
-        markAt(la, ln);
+        markAt(la, ln, true);
       });
       mapRef.current = map;
       panRef.current = (la: number, ln: number) => {
@@ -241,6 +288,7 @@ export default function ListingForm({
         setLat(la);
         setLng(ln);
         if (panRef.current) panRef.current(la, ln);
+        reverseSuggest(la, ln);
       },
       () => setErr("অবস্থান নেওয়া যায়নি — ম্যাপে ক্লিক করে বসান")
     );
@@ -485,10 +533,11 @@ export default function ListingForm({
         <div>
           <Field
             label="ম্যাপে ক্লিক করে বাসার অবস্থান বসান"
-            hint="ঐচ্ছিক — ভাড়াটিয়ারা ম্যাপে দেখতে পাবেন"
+            hint="পিনটি টেনেও সরানো যায় — ভাড়াটিয়ারা বাসাখুঁজি ম্যাপে দেখতে পাবেন"
           >
             <div ref={mapEl} className={styles.mapBox} />
           </Field>
+          {geoNote && <p className={styles.geoNote}>{geoNote}</p>}
           <div className={styles.coordRow}>
             {lat != null && lng != null ? (
               <>

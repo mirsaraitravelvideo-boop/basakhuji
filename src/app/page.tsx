@@ -5,7 +5,7 @@ import { listingImageUrl } from "@/lib/images";
 import { SiteHeader, EmptyState } from "@/components/ui";
 import ListingCard, { type ListingCardData } from "@/components/ListingCard";
 import HeroSearch from "./_components/HeroSearch";
-import GoogleMapEmbed from "./_components/GoogleMapEmbed";
+import HomeMap, { type HomeMapDemand } from "./_components/HomeMap";
 import homeStyles from "./home.module.css";
 
 const FALLBACK_NOTICE = "স্বাগতম! বাসাখুঁজি বাংলাদেশ — নিরাপদ বাসা ভাড়ার ঠিকানা।";
@@ -28,6 +28,8 @@ type HomeRow = {
   bathrooms: number | null;
   property_type: string;
   is_verified: boolean;
+  latitude: number | null;
+  longitude: number | null;
   property_images: { storage_path: string }[] | null;
 };
 
@@ -68,7 +70,7 @@ export default async function Home() {
   const now = new Date().toISOString();
   const vis = `expires_at.is.null,expires_at.gt.${now}`;
 
-  const [{ data: noticeRow }, { data: propRows }, profile, role] =
+  const [{ data: noticeRow }, { data: propRows }, profile, role, demandRes] =
     await Promise.all([
       supabase
         .from("notices")
@@ -83,7 +85,7 @@ export default async function Home() {
       supabase
         .from("properties")
         .select(
-          "id,title,district,area,monthly_rent,bedrooms,bathrooms,property_type,is_verified,property_images(storage_path)"
+          "id,title,district,area,monthly_rent,bedrooms,bathrooms,property_type,is_verified,latitude,longitude,property_images(storage_path)"
         )
         .eq("status", "approved")
         .or(vis)
@@ -94,6 +96,11 @@ export default async function Home() {
         .limit(9),
       getMyProfile(),
       getRole(),
+      /* চাহিদা লেয়ার — function না থাকলে/এরর হলে খালি */
+      supabase.rpc("demand_by_area").then(
+        (r) => (r.error || !r.data ? [] : (r.data as HomeMapDemand[])),
+        () => [] as HomeMapDemand[]
+      ),
     ]);
 
   const rows = ((propRows ?? []) as HomeRow[]).map((p) => ({
@@ -117,6 +124,17 @@ export default async function Home() {
   }));
 
   const [featured, ...rest] = listings;
+
+  /* ম্যাপের পিন — কোঅর্ডিনেট আছে এমন বিজ্ঞাপন (সততা নিয়ম) */
+  const mapPoints = rows
+    .filter((p) => p.latitude != null && p.longitude != null)
+    .map((p) => ({
+      id: p.id,
+      title: p.title,
+      lat: p.latitude as number,
+      lng: p.longitude as number,
+      rent: p.monthly_rent,
+    }));
 
   const isStaff =
     role === "moderator" || role === "admin" || role === "super_admin";
@@ -168,11 +186,11 @@ export default async function Home() {
           <div className="container">
             <div className={homeStyles.sectionHead}>
               <h2>ম্যাপে দেখুন</h2>
-              <Link href="/search" className={homeStyles.seeAll}>
-                সব দেখুন →
+              <Link href="/search?view=map" className={homeStyles.seeAll}>
+                বড় ম্যাপ →
               </Link>
             </div>
-            <GoogleMapEmbed />
+            <HomeMap points={mapPoints} demand={demandRes} />
           </div>
         </section>
 
