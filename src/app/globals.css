@@ -51,37 +51,75 @@ img {
   padding: 0 16px;
 }
 
-/* নোটিশ বার — অ্যানিমেটেড */
+/* নোটিশ ব্যানার — বড় ঘোষণা, অ্যানিমেটেড */
 .notice-bar {
-  background: var(--primary-dark);
+  background: linear-gradient(120deg, #7c2d12 0%, #9a3412 45%, #7c2d12 100%);
   color: #fff;
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 10px 16px;
+  padding: 16px;
   overflow: hidden;
   position: relative;
   animation: noticeSlideDown 0.5s ease-out;
+  border-bottom: 3px solid #fdba74;
 }
-/* নরম আলোর ঝলকানি — মনোযোগ আকর্ষণ করে */
+/* আলোর ঝলকানি — মনোযোগ আকর্ষণ করে */
 .notice-bar::after {
   content: "";
   position: absolute;
   top: 0;
   left: -60%;
-  width: 40%;
+  width: 45%;
   height: 100%;
   background: linear-gradient(
     100deg,
     transparent,
-    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.28),
     transparent
   );
-  animation: noticeShine 4s ease-in-out infinite;
+  animation: noticeShine 3.5s ease-in-out infinite;
+  pointer-events: none;
 }
-.notice-bar a {
+.notice-banner-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
   color: #fff;
+  text-decoration: none;
   position: relative;
   z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.notice-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+.notice-bell {
+  display: inline-block;
+  animation: bellRing 2.2s ease-in-out infinite;
+  transform-origin: top center;
+}
+.notice-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.notice-cta {
+  font-size: 0.82rem;
+  font-weight: 700;
+  opacity: 0.9;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 @keyframes noticeSlideDown {
   from {
@@ -95,16 +133,34 @@ img {
 }
 @keyframes noticeShine {
   0%,
-  55% {
+  50% {
     left: -60%;
   }
   100% {
     left: 130%;
   }
 }
+@keyframes bellRing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30% {
+    transform: rotate(14deg);
+  }
+  20%,
+  40% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .notice-bar,
-  .notice-bar::after {
+  .notice-bar::after,
+  .notice-bell {
     animation: none;
   }
 }

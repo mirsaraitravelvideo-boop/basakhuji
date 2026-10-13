@@ -143,8 +143,12 @@ export default async function Home() {
     <>
       <div className="notice-bar" role="status">
         {noticeRow ? (
-          <Link href="/notices" className={homeStyles.noticeLink}>
-            📢 {noticeRow.title}
+          <Link href="/notices" className="notice-banner-link">
+            <span className="notice-eyebrow">
+              <span className="notice-bell">📢</span> ঘোষণা
+            </span>
+            <span className="notice-title">{noticeRow.title}</span>
+            <span className="notice-cta">বিস্তারিত দেখুন →</span>
           </Link>
         ) : (
           FALLBACK_NOTICE
