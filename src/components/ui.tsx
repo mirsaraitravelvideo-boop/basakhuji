@@ -17,9 +17,14 @@ export function SiteHeader({ name, role, isStaff }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <div className="container">
-        <Link href="/" className="brand">
-          বাসাখুঁজি বাংলাদেশ
-        </Link>
+        <div className="header-top">
+          <Link href="/" className="brand">
+            🏠 বাসাখুঁজি
+          </Link>
+          <Link href="/search" className="loc-pill">
+            📍 সারা বাংলাদেশ
+          </Link>
+        </div>
         <nav className="nav-links" aria-label="প্রধান মেনু">
           <Link href="/search">বাসা খুঁজুন</Link>
           <Link href="/notices">নোটিশ</Link>

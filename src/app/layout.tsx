@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import BottomNav from "@/components/BottomNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B6B3A",
+  themeColor: "#C2703D",
 };
 
 export default function RootLayout({
@@ -23,7 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bn">
-      <body>{children}</body>
+      <body>
+        {children}
+        <BottomNav />
+      </body>
     </html>
   );
 }

@@ -1,17 +1,21 @@
-/* বাসাখুঁজি বাংলাদেশ — ব্র্যান্ড টোকেন ও মোবাইল-ফার্স্ট বেস স্টাইল */
+/* বাসাখুঁজি বাংলাদেশ — উষ্ণ ক্রিম থিম (ডিজাইন #২: photo-first) */
 
 :root {
-  --primary: #0b6b3a; /* গাঢ় সবুজ */
-  --primary-dark: #085127;
-  --primary-soft: #e6f4ec;
-  --cream: #fffdf6; /* হালকা ক্রিম */
-  --accent: #f97316; /* কমলা */
+  --primary: #c2703d; /* টেরাকোটা ক্লে — বাটন, লিংক, ব্র্যান্ড */
+  --primary-dark: #a05a2e;
+  --primary-soft: #f6e7d2; /* হালকা ক্লে টিন্ট */
+  --hero: #0b6b3a; /* এমারাল্ড সবুজ — হিরো */
+  --hero-dark: #074d27;
+  --cream: #faf5ec; /* উষ্ণ ক্রিম — পেজ ব্যাকগ্রাউন্ড */
+  --surface: #fffdf8; /* কার্ড সারফেস */
+  --accent: #f97316; /* কমলা — CTA পিল বাটন */
   --accent-dark: #d65f0a;
-  --ink: #1c2b23;
-  --muted: #6b7f74;
-  --line: #e8e2d4;
-  --card-radius: 14px;
-  --shadow-soft: 0 2px 12px rgba(11, 107, 58, 0.08);
+  --ink: #3e2f23; /* গাঢ় বাদামি টেক্সট */
+  --muted: #8a7364; /* উষ্ণ ধূসর-বাদামি */
+  --line: #ece1cf; /* উষ্ণ বর্ডার */
+  --card-radius: 20px;
+  --shadow-soft: 0 4px 20px rgba(62, 47, 35, 0.08);
+  --shadow-lift: 0 8px 28px rgba(62, 47, 35, 0.12);
 }
 
 * {
@@ -49,47 +53,95 @@ img {
 
 /* নোটিশ বার */
 .notice-bar {
-  background: var(--primary);
+  background: var(--primary-dark);
   color: #fff;
   font-size: 0.9rem;
   text-align: center;
   padding: 10px 16px;
 }
 
-/* হেডার */
+/* হেডার — স্লিম পিল বার */
 .site-header {
-  background: #fff;
-  border-bottom: 1px solid var(--line);
+  background: var(--cream);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
+  padding: 10px 0 0;
 }
 
 .site-header .container {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+@media (min-width: 1080px) {
+  .site-header .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  gap: 12px;
 }
 
 .brand {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--primary);
   text-decoration: none;
+  white-space: nowrap;
+}
+
+.loc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 12px;
+  gap: 4px 16px;
   align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
 }
 
 /* বাটন */
@@ -134,28 +186,38 @@ img {
   padding: 10px 24px;
 }
 
-/* হিরো */
+/* হিরো — এমারাল্ড সবুজ (ডিজাইন #১) */
 .hero {
-  background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(165deg, var(--hero) 0%, var(--hero-dark) 100%);
   color: #fff;
-  padding: 44px 0 52px;
+  padding: 40px 0 110px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero h1 {
   margin: 0 0 8px;
-  font-size: 1.9rem;
-  line-height: 1.35;
+  font-size: 1.85rem;
+  line-height: 1.4;
+  font-weight: 800;
+  color: #fff;
+  position: relative;
+  z-index: 1;
 }
 
 .hero p {
-  margin: 0 0 24px;
-  opacity: 0.92;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.95rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* সার্চ কার্ড */
 .search-card {
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-soft);
   padding: 18px;
@@ -177,11 +239,12 @@ img {
 .search-card input {
   width: 100%;
   border: 1.5px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px 14px;
   font-size: 1rem;
   font-family: inherit;
   background: var(--cream);
+  color: var(--ink);
 }
 
 .search-card input:focus {
@@ -191,14 +254,15 @@ img {
 
 /* সেকশন */
 .section {
-  padding: 40px 0;
+  padding: 32px 0;
 }
 
 .section h2 {
-  text-align: center;
-  color: var(--primary);
-  margin: 0 0 20px;
-  font-size: 1.4rem;
+  text-align: left;
+  color: var(--ink);
+  margin: 0 0 18px;
+  font-size: 1.35rem;
+  font-weight: 800;
 }
 
 /* ধাপ কার্ড */
@@ -208,7 +272,7 @@ img {
 }
 
 .step-card {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--card-radius);
   padding: 20px;
@@ -222,7 +286,7 @@ img {
   height: 40px;
   border-radius: 50%;
   background: var(--primary-soft);
-  color: var(--primary);
+  color: var(--primary-dark);
   font-weight: 800;
   margin-bottom: 10px;
 }
@@ -240,8 +304,8 @@ img {
 
 /* ফুটার */
 .site-footer {
-  background: var(--primary-dark);
-  color: #d9e8de;
+  background: var(--ink);
+  color: #e8dcc9;
   padding: 32px 0 24px;
   margin-top: 24px;
   font-size: 0.9rem;
@@ -259,15 +323,23 @@ img {
 
 /* সার্চ ফলাফল পেজ */
 .result-meta {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--card-radius);
   padding: 16px 20px;
   margin: 24px 0;
+  box-shadow: var(--shadow-soft);
 }
 
 .result-meta p {
   margin: 6px 0;
+}
+
+/* বটম ন্যাভের জন্য মোবাইলে জায়গা */
+@media (max-width: 719px) {
+  body {
+    padding-bottom: 84px;
+  }
 }
 
 @media (min-width: 720px) {
@@ -275,7 +347,7 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
   .hero h1 {
-    font-size: 2.4rem;
+    font-size: 1.7rem;
   }
 }
 

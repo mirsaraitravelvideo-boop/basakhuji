@@ -1,4 +1,4 @@
-/* হোমপেজের অতিরিক্ত স্টাইল */
+/* হোমপেজ — কম্বিনেশন ডিজাইন (#১ হিরো + #২ বডি + #৩ ম্যাপ) */
 
 .noticeLink {
   color: #fff;
@@ -6,6 +6,56 @@
   text-underline-offset: 3px;
 }
 
+/* হিরোর স্কাইলাইন ইলাস্ট্রেশন */
+.skyline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+}
+
+/* হিরোর উপর ভাসমান সার্চ কার্ড */
+.searchFloat {
+  margin-top: -84px;
+  position: relative;
+  z-index: 5;
+}
+
+/* ক্যাটাগরি চিপ */
+.chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 18px 16px 4px;
+  margin: 0 -16px;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: 0 0 auto;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 10px 22px;
+  box-shadow: var(--shadow-soft);
+}
+
+.chip:active {
+  background: var(--primary-soft);
+}
+
+/* সেকশন হেড */
 .sectionHead {
   display: flex;
   align-items: center;
@@ -16,8 +66,9 @@
 
 .sectionHead h2 {
   margin: 0;
-  color: var(--primary);
-  font-size: 1.4rem;
+  color: var(--ink);
+  font-size: 1.35rem;
+  font-weight: 800;
 }
 
 .seeAll {
@@ -32,20 +83,36 @@
   text-decoration: underline;
 }
 
-.grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr;
+/* ফিচার্ড কার্ড */
+.featuredWrap {
+  margin-bottom: 14px;
 }
 
-@media (min-width: 560px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ২-কলাম গ্রিড */
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ম্যাপ সেকশন */
+.mapHint {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .chips {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 @media (min-width: 900px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
   }
 }
