@@ -1,3 +1,8 @@
 # Cloudflare Workers config — বাসাখুঁজি বাংলাদেশ
 name = "basakhuji-bangladesh"
 compatibility_date = "2025-06-01"
+
+main = ".open-next/worker.js"
+
+[assets]
+directory = ".open-next/assets"
